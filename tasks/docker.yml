@@ -32,7 +32,7 @@
 
 - name: ensure glance docker image has been built
   docker_image:
-    name: "{{ glance_docker_username }}/glance"
+    name: "{{ glance_docker_username }}/{{ glance_docker_imagename }}"
     path: "{{ ansible_env.PWD }}/.ansible_cache/docker/glance"
     state: present
 
