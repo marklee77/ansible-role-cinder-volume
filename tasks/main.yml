@@ -29,6 +29,7 @@
     tenant: service
     user: glance
     password: "{{ glance_identity_glance_password }}"
+
 - include: docker.yml
   when: glance_dockerized_deployment
 
