@@ -1,7 +1,10 @@
 ---
+# FIXME: for security we assume root login requires direct login access to mysql
+# node, needs delegate_to for non-centralized deployments.
+
 - name: ensure glance database is present
   mysql_db:
-    login_host: "{{ glance_mysql_host }}"
+    login_host: 127.0.0.1
     login_port: "{{ glance_mysql_port }}"
     login_user: root
     login_password: "{{ glance_mysql_root_password }}"
@@ -10,7 +13,7 @@
 
 - name: ensure glance database user is present
   mysql_user:
-    login_host: "{{ glance_mysql_host }}"
+    login_host: 127.0.0.1
     login_port: "{{ glance_mysql_port }}"
     login_user: root
     login_password: "{{ glance_mysql_root_password }}"
