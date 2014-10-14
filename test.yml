@@ -2,6 +2,7 @@
 - hosts: all
   sudo: True
   vars:
+    identity_demo_password: password
     cirros_url: http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img
  
   tasks:
@@ -35,7 +36,7 @@
         token: "{{ glance_identity_admin_token }}"
         tenant: demo
         user: demo
-        password: "{{ glance_identity_demo_password }}"
+        password: "{{ identity_demo_password }}"
 
     - name: associate _member_ role with demo user
       keystone_user:
@@ -45,12 +46,18 @@
         user: demo
         role: _member_
 
+    - name: update demo.openrc from template
+      template:
+        src: templates/demo.openrc
+        dest: "{{ ansible_env.PWD }}/demo.openrc"
+        owner: "{{ ansible_ssh_user }}"
+
     - name: ensure cirros image is registered
       glance_image:
         auth_url: "{{ glance_identity_public_url }}"
         login_tenant_name: demo
         login_username: demo
-        login_password: "{{ glance_identity_demo_password }}"
+        login_password: "{{ identity_demo_password }}"
         name: cirros-0.3.1-x86_64
         disk_format: qcow2
         copy_from: "{{ cirros_url }}"
