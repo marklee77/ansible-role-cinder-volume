@@ -26,9 +26,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "prep.yml"
     ansible.extra_vars = {
+      glance_dockerized_deployment: true,
       mariadb_bind_address: "0.0.0.0",
-      keystone_identity_host: "{{ ansible_docker0['ipv4']['address'] }}",
-      glance_dockerized_deployment: true
+      keystone_identity_host: "{{ ansible_docker0['ipv4']['address'] }}"
     }
   end
 
