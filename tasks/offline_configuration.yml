@@ -2,6 +2,9 @@
 - name: ensure glance is properly configured
   ini_file:
     dest: /etc/glance/glance-{{ item[0] }}.conf
+    owner: glance
+    group: glance
+    mode: 0600
     section: "{{ item[1].section }}"
     option: "{{ item[1].option }}"
     value: "{{ item[1].value }}"
