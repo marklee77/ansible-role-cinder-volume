@@ -1,0 +1,28 @@
+---
+- name: create glance user in keystone
+  keystone_user:
+    endpoint: "{{ glance_identity_admin_url }}"
+    token: "{{ glance_identity_admin_token }}"
+    tenant: service
+    user: glance
+    password: "{{ glance_identity_glance_password }}"
+
+- name: add glance user to the service tenant with the admin role
+  keystone_user:
+    endpoint: "{{ glance_identity_admin_url }}"
+    token: "{{ glance_identity_admin_token }}"
+    tenant: service
+    user: glance
+    role: admin
+
+- name: add glance endpoint
+  keystone_service:
+    endpoint: "{{ glance_identity_admin_url }}"
+    token: "{{ glance_identity_admin_token }}"
+    region: "{{ glance_identity_region }}"
+    name: glance
+    type: image
+    description: "Image Service"
+    public_url: "{{ glance_image_public_url }}"
+    internal_url: "{{ glance_image_internal_url }}"
+    admin_url: "{{ glance_image_admin_url }}"

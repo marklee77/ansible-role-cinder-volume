@@ -17,19 +17,12 @@ not (easily) run on travis.
 Role Variables
 --------------
 
-- glance_repository_mirror: http://mirrors.coreix.net/glance by default.
-- glance_version: 10.0
-- glance_mysql_root_password: random value
-- glance_enable_remote: false
-- glance_set_root_password: true
-
 The variables below only affect the dockerized deployment:
 
 - glance_dockerized_deployment: false
 - glance_docker_username: default
 - glance_docker_imagename: glance
 - glance_docker_containername: glance
-- glance_port: 3306
 
 Example Playbook
 -------------------------
@@ -59,5 +52,3 @@ Todo
 ----
 
 - delegate_to in order to allow for installing on hosts different from glance host...
-- consider making mapping of glance port to host interface optional
-- eventually, we're going to need a better way to pass in variables...
