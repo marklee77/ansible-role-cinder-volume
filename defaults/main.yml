@@ -28,15 +28,15 @@ glance_log_dir: /var/log/glance
 glance_log_verbose: true
 glance_log_debug: false
 
-glance_identity_endpoint_host: 127.0.0.1
-glance_identity_admin_url: http://{{ glance_identity_endpoint_host }}:35357/v2.0
-glance_identity_internal_url: http://{{ glance_identity_endpoint_host }}:5000/v2.0
-glance_identity_public_url: http://{{ glance_identity_endpoint_host }}:5000/v2.0
+glance_identity_host: 127.0.0.1
+glance_identity_admin_url: http://{{ glance_identity_host }}:35357/v2.0
+glance_identity_internal_url: http://{{ glance_identity_host }}:5000/v2.0
+glance_identity_public_url: http://{{ glance_identity_host }}:5000/v2.0
 
-glance_image_endpoint_host: 127.0.0.1
-glance_image_admin_url: http://{{ glance_image_endpoint_host }}:9292
-glance_image_internal_url: http://{{ glance_image_endpoint_host }}:9292
-glance_image_public_url: http://{{ glance_image_endpoint_host }}:9292
+glance_image_host: 127.0.0.1
+glance_image_admin_url: http://{{ glance_image_host }}:9292
+glance_image_internal_url: http://{{ glance_image_host }}:9292
+glance_image_public_url: http://{{ glance_image_host }}:9292
 
 glance_identity_region: RegionOne
 
