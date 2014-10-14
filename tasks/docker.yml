@@ -50,7 +50,7 @@
           "glance_mysql_port" : "{{ glance_mysql_port }}",
           "glance_mysql_glance_password" :
             "{{ glance_mysql_glance_password }}",
-          "glance_identity_endpoint_host" : "{{ glance_identity_endpoint_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
+          "glance_identity_host" : "{{ glance_identity_host|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
           "glance_identity_internal_url" : "{{ glance_identity_internal_url|replace("127.0.0.1", ansible_docker0['ipv4']['address']) }}",
           "glance_identity_glance_password" : "{{ glance_identity_glance_password }}" }'
     detach: no
