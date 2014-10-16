@@ -33,11 +33,6 @@
       - { section: paste_deploy, option: flavor, value: keystone }
   register: modify_glance_ini
 
-- name: ensure glance sqlite is deleted
-  file:
-    dest: /var/lib/glance/glance.sqlite
-    state: absent
-
 - name: ensure glance database has been populated with required tables
   sudo_user: glance
   command: /usr/bin/glance-manage db_sync
@@ -72,3 +67,10 @@
     - glance-api
   when: modify_glance_ini|changed and
         glance_dockerize_context is not defined
+
+- name: ensure glance sqlite is deleted
+  file:
+    dest: /var/lib/glance/glance.sqlite
+    state: absent
+
+
