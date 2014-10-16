@@ -11,6 +11,25 @@
     - python-mysqldb
     - glance
 
+- name: ensure glance is started and enabled
+  service: 
+    name: "{{ item }}"
+    state: started 
+    enabled: yes
+  with_items:
+    - glance-registry
+    - glance-api
+
+- name: ensure glance is properly shut down for dockerized deployments
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: yes
+  with_items:
+    - glance-registry
+    - glance-api
+  when: glance_dockerize_context is defined
+
 - name: ensure supervisor is installed for dockerized deployments 
   apt: 
     pkg: "{{ item }}"
@@ -30,21 +49,4 @@
     mode: 0644
   when: glance_dockerize_context is defined
 
-- name: ensure glance is started and enabled
-  service: 
-    name: "{{ item }}"
-    state: started 
-    enabled: yes
-  with_items:
-    - glance-registry
-    - glance-api
 
-- name: ensure glance is properly shut down for dockerized deployments
-  service:
-    name: "{{ item }}"
-    state: stopped
-    enabled: yes
-  with_items:
-    - glance-registry
-    - glance-api
-  when: glance_dockerize_context is defined

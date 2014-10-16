@@ -11,25 +11,25 @@
   with_nested:
     - [ 'api', 'registry' ]
     - 
-      - { section: DEFAULT, option: verbose, value: "{{ glance_log_verbose }}" }
-      - { section: DEFAULT, option: debug, value: "{{ glance_log_debug }}" }
-      - { section: DEFAULT, option: log_dir, value: "{{ glance_log_dir }}" }
+      - { section: DEFAULT, option: log_dir, value: /var/log/glance }
+      - { section: DEFAULT, option: verbose, value: "{{ openstack_log_verbose }}" }
+      - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
       - { section: database, option: connection,
-          value: "mysql://glance:{{ glance_mysql_glance_password }}@{{ 
-                    glance_mysql_host }}:{{ glance_mysql_port }}/glance" }
+          value: "mysql://glance:{{ openstack_mysql_glance_password }}@{{ 
+                    openstack_mysql_host }}:{{ openstack_mysql_port }}/glance" }
       - { section: database, option: db_enforce_mysql_charset,
           value: False }
       - { section: keystone_authtoken, option: auth_uri, 
-          value: "{{ glance_identity_internal_url }}" }
+          value: "{{ openstack_identity_internal_url }}" }
       - { section: keystone_authtoken, option: auth_host, 
-          value: "{{ glance_identity_host }}" }
+          value: "{{ openstack_identity_endpoint_host }}" }
       - { section: keystone_authtoken, option: auth_port, value: 35357 }
       - { section: keystone_authtoken, option: auth_protocol, value: http }
       - { section: keystone_authtoken, option: admin_tenant_name, 
           value: service }
       - { section: keystone_authtoken, option: admin_user, value: glance }
       - { section: keystone_authtoken, option: admin_password, 
-          value: "{{ glance_identity_glance_password }}" }
+          value: "{{ openstack_identity_glance_password }}" }
       - { section: paste_deploy, option: flavor, value: keystone }
   register: modify_glance_ini
 
@@ -42,7 +42,8 @@
   sudo_user: glance
   command: /usr/bin/glance-manage db_sync
   when: glance_dockerize_context is defined or
-        create_glance_db|changed
+        create_glance_db|changed or
+        modify_glance_ini|changed
   failed_when: false
 
 - name: update glance workaround script from template
@@ -52,12 +53,15 @@
     owner: glance
     group: glance
     mode: 0700 
+  register: update_workaround_script
 
 - name: run glance database workaround script
   sudo_user: glance
   command: /var/lib/glance/glance-mysql-utf8-workaround.sh
   when: glance_dockerize_context is defined or
-        create_glance_db|changed
+        create_glance_db|changed or
+        modify_glance_ini|changed or
+        update_workaround_script|changed
 
 - name: restart glance
   service:

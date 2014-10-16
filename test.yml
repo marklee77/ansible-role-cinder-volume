@@ -2,9 +2,8 @@
 - hosts: all
   sudo: True
   vars:
-    identity_demo_password: password
-    cirros_url: http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img
- 
+    openstack_identity_demo_password: password
+    cirros_url: http://cdn.download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
   tasks:
 
     - name: update admin.openrc from template
@@ -25,23 +24,23 @@
 
     - name: create demo tenant
       keystone_user:
-        endpoint: "{{ glance_identity_admin_url }}"
-        token: "{{ glance_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         tenant_description: "Demo Tenant"
 
     - name: create demo user
       keystone_user:
-        endpoint: "{{ glance_identity_admin_url }}"
-        token: "{{ glance_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         user: demo
-        password: "{{ identity_demo_password }}"
+        password: "{{ openstack_identity_demo_password }}"
 
     - name: associate _member_ role with demo user
       keystone_user:
-        endpoint: "{{ glance_identity_admin_url }}"
-        token: "{{ glance_identity_admin_token }}"
+        endpoint: "{{ openstack_identity_admin_url }}"
+        token: "{{ openstack_identity_admin_token }}"
         tenant: demo
         user: demo
         role: _member_
@@ -53,12 +52,12 @@
         owner: "{{ ansible_ssh_user }}"
 
     - name: ensure cirros image is registered
-      glance_image:
-        auth_url: "{{ glance_identity_public_url }}"
+      openstack_image:
+        auth_url: "{{ openstack_identity_public_url }}"
         login_tenant_name: demo
         login_username: demo
-        login_password: "{{ identity_demo_password }}"
-        name: cirros-0.3.1-x86_64
+        login_password: "{{ openstack_identity_demo_password }}"
+        name: cirros
         disk_format: qcow2
         copy_from: "{{ cirros_url }}"
         is_public: True

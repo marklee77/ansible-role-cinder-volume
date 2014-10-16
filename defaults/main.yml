@@ -1,44 +1,44 @@
 ---
-glance_run_dir: "{{ lookup('env', 'PWD') }}"
-glance_mysql_root_password: >
-  {{ lookup('password', glance_run_dir + 
+openstack_run_dir: "{{ lookup('env', 'PWD') }}"
+openstack_mysql_root_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/mysql-root-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-glance_mysql_glance_password: >
-  {{ lookup('password', glance_run_dir + 
+openstack_mysql_glance_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/mysql-glance-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-glance_identity_admin_token: >
-  {{ lookup('password', glance_run_dir + 
+openstack_identity_admin_token: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/keystone-admin-token 
                          length=20 
                          chars=ascii_letters,digits') }}
-glance_identity_glance_password: >
-  {{ lookup('password', glance_run_dir + 
+openstack_identity_glance_password: >
+  {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/keystone-glance-password 
                          length=20 
                          chars=ascii_letters,digits') }}
 
-glance_mysql_host: 127.0.0.1
-glance_mysql_port: 3306
+openstack_mysql_host: 127.0.0.1
+openstack_mysql_port: 3306
 
-glance_log_dir: /var/log/glance
-glance_log_verbose: true
-glance_log_debug: false
+openstack_log_dir: /var/log/glance
+openstack_log_verbose: true
+openstack_log_debug: false
 
-glance_identity_host: 127.0.0.1
-glance_identity_admin_url: http://{{ glance_identity_host }}:35357/v2.0
-glance_identity_internal_url: http://{{ glance_identity_host }}:5000/v2.0
-glance_identity_public_url: http://{{ glance_identity_host }}:5000/v2.0
+openstack_identity_endpoint_host: 127.0.0.1
+openstack_identity_admin_url: http://{{ glance_identity_endpoint_host }}:35357/v2.0
+openstack_identity_internal_url: http://{{ glance_identity_endpoint_host }}:5000/v2.0
+openstack_identity_public_url: http://{{ glance_identity_endpoint_host }}:5000/v2.0
 
-glance_image_host: 127.0.0.1
-glance_image_admin_url: http://{{ glance_image_host }}:9292
-glance_image_internal_url: http://{{ glance_image_host }}:9292
-glance_image_public_url: http://{{ glance_image_host }}:9292
+openstack_image_endpoint_host: 127.0.0.1
+openstack_image_admin_url: http://{{ glance_image_endpoint_host }}:9292
+openstack_image_internal_url: http://{{ glance_image_endpoint_host }}:9292
+openstack_image_public_url: http://{{ glance_image_endpoint_host }}:9292
 
-glance_identity_region: RegionOne
+openstack_default_region: RegionOne
 
 # The variables below only apply to dockerized deployment
 glance_dockerized_deployment: false
