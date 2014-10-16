@@ -29,14 +29,14 @@ openstack_log_verbose: true
 openstack_log_debug: false
 
 openstack_identity_endpoint_host: 127.0.0.1
-openstack_identity_admin_url: http://{{ glance_identity_endpoint_host }}:35357/v2.0
-openstack_identity_internal_url: http://{{ glance_identity_endpoint_host }}:5000/v2.0
-openstack_identity_public_url: http://{{ glance_identity_endpoint_host }}:5000/v2.0
+openstack_identity_admin_url: http://{{ openstack_identity_endpoint_host }}:35357/v2.0
+openstack_identity_internal_url: http://{{ openstack_identity_endpoint_host }}:5000/v2.0
+openstack_identity_public_url: http://{{ openstack_identity_endpoint_host }}:5000/v2.0
 
 openstack_image_endpoint_host: 127.0.0.1
-openstack_image_admin_url: http://{{ glance_image_endpoint_host }}:9292
-openstack_image_internal_url: http://{{ glance_image_endpoint_host }}:9292
-openstack_image_public_url: http://{{ glance_image_endpoint_host }}:9292
+openstack_image_admin_url: http://{{ openstack_image_endpoint_host }}:9292
+openstack_image_internal_url: http://{{ openstack_image_endpoint_host }}:9292
+openstack_image_public_url: http://{{ openstack_image_endpoint_host }}:9292
 
 openstack_default_region: RegionOne
 
