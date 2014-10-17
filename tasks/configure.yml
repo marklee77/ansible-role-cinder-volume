@@ -13,6 +13,8 @@
       - { section: DEFAULT, option: log_dir, value: /var/log/glance }
       - { section: DEFAULT, option: verbose, value: "{{ openstack_log_verbose }}" }
       - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
+      - { section: DEFAULT, 
+          option: container_formats, value: ami,ari,aki,bare,ovf,docker }
       - { section: database, option: connection,
           value: "mysql://glance:{{ openstack_mysql_glance_password }}@{{ 
                     openstack_mysql_host }}:{{ openstack_mysql_port }}/glance" }
