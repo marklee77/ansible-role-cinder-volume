@@ -27,8 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "provisioning/prep.yml"
     ansible.extra_vars = {
       glance_dockerized_deployment: true,
-      mariadb_bind_address: "0.0.0.0",
-      openstack_identity_endpoint_host: "{{ ansible_docker0['ipv4']['address'] }}"
     }
   end
 
@@ -37,7 +35,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.extra_vars = {
       glance_dockerized_deployment: true,
       openstack_mysql_host: "{{ ansible_docker0['ipv4']['address'] }}",
-      openstack_identity_endpoint_host: "{{ ansible_docker0['ipv4']['address'] }}"
     }
   end
 
