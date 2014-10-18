@@ -13,4 +13,5 @@ group_vars
 private
 roles
 templates/admin.openrc
+templates/demo.openrc
 templates/ansible_cache
