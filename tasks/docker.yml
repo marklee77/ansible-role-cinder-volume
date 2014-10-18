@@ -43,7 +43,6 @@
     command: >
       ansible-playbook 
         -i inventories/local.ini provisioning/configure.yml -e '{ 
-          "openstack_log_dir" : "{{ openstack_log_dir }}",
           "openstack_log_verbose" : "{{ openstack_log_verbose }}",
           "openstack_log_debug" : "{{ openstack_log_debug }}",
           "openstack_mysql_host" : "{{ openstack_mysql_host }}",
