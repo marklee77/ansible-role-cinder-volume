@@ -3,5 +3,5 @@
   gather_facts: True
   sudo: True
   roles:
-    - marklee77.mysql
-    - marklee77.keystone
+    - mysql
+    - keystone

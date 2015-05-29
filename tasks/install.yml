@@ -6,10 +6,10 @@
     update_cache: yes 
     cache_valid_time: 600
   with_items:
+    - glance
     - mysql-client
     - python-glanceclient
     - python-mysqldb
-    - glance
 
 - name: ensure glance is started and enabled
   service: 
