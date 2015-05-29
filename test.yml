@@ -3,7 +3,7 @@
   sudo: True
   vars:
     openstack_identity_demo_password: password
-    cirros_url: http://cdn.download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-disk.img
+    cirros_url: http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
   tasks:
 
     - name: update admin.openrc from template
