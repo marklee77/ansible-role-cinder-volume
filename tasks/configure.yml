@@ -37,8 +37,7 @@
 - name: ensure glance database has been populated with required tables
   sudo_user: glance
   command: /usr/bin/glance-manage db_sync
-  when: glance_dockerize_context is defined or
-        create_glance_db|changed or
+  when: create_glance_db|changed or
         modify_glance_ini|changed
   failed_when: false
 
@@ -54,8 +53,7 @@
 - name: run glance database workaround script
   sudo_user: glance
   command: /var/lib/glance/glance-mysql-utf8-workaround.sh
-  when: glance_dockerize_context is defined or
-        create_glance_db|changed or
+  when: create_glance_db|changed or
         modify_glance_ini|changed or
         update_workaround_script|changed
 
@@ -66,8 +64,7 @@
   with_items:
     - glance-registry
     - glance-api
-  when: modify_glance_ini|changed and
-        glance_dockerize_context is not defined
+  when: modify_glance_ini|changed
 
 - name: ensure glance sqlite is deleted
   file:
