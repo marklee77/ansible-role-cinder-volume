@@ -41,9 +41,3 @@ openstack_image_internal_url: http://{{ openstack_image_endpoint_host }}:9292
 openstack_image_public_url: http://{{ openstack_image_endpoint_host }}:9292
 
 openstack_identity_region: RegionOne
-
-# The variables below only apply to dockerized deployment
-glance_dockerized_deployment: false
-glance_docker_username: default
-glance_docker_imagename: glance
-glance_docker_containername: glance
