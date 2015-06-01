@@ -2,8 +2,9 @@
 - hosts: all
   sudo: True
   vars:
+    cirros_url: 
+      http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
     openstack_identity_demo_password: password
-    cirros_url: http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
   tasks:
 
     - name: update admin.openrc from template
@@ -11,16 +12,6 @@
         src: templates/admin.openrc
         dest: "{{ ansible_env.PWD }}/admin.openrc"
         owner: "{{ ansible_ssh_user }}"
-
-    - name: ensure packages required for testing are installed
-      apt:
-        pkg: "{{ item }}"
-        state: latest
-        update_cache: yes
-        cache_valid_time: 600
-      with_items:
-        - python-keystoneclient
-        - python-glanceclient
 
     - name: create demo tenant
       keystone_user:
