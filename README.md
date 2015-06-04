@@ -1,6 +1,8 @@
 glance ansible role
 ===================
 
+[![Build Status](https://travis-ci.org/marklee77/ansible-role-glance.svg?branch=master)](https://travis-ci.org/marklee77/ansible-role-glance)
+
 The purpose of this role is to deploy glance onto Ubuntu. 
 
 Role Variables
