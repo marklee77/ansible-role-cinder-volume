@@ -1,21 +1,25 @@
 ---
-- name: ensure glance packages and dependencies are installed
-  apt: 
-    pkg: "{{ item }}"
-    state: latest 
-    update_cache: yes 
-    cache_valid_time: 600
-  with_items:
-    - glance
-    - mysql-client
-    - python-glanceclient
-    - python-mysqldb
+- name: ensure openstack glance requirements packages are installed
+  action: "{{ openstack_glance_package_info.pkg_mgr }}"
+  args: openstack_glance_package_info.args
+  with_items: openstack_glance_package_info.pre_pkgs
+  when: openstack_glance_package_info.pre_pkgs|length > 0
 
-- name: ensure glance is started and enabled
-  service: 
+- name: ensure openstack repository is enabled
+  action: "{{ openstack_glance_repo_info.pkg_repo }}"
+  args: openstack_glance_repo_info.args
+  with_items: openstack_glance_repo_info.repos
+  when: openstack_glance_repo_info.repos|length > 0
+
+- name: ensure openstack glance packages are installed
+  action: "{{ openstack_glance_package_info.pkg_mgr }}"
+  args: openstack_glance_package_info.args
+  with_items: openstack_glance_package_info.pkgs
+  when: openstack_glance_package_info.pkgs|length > 0
+
+- name: ensure glance services are started and enabled
+  service:
     name: "{{ item }}"
-    state: started 
+    state: started
     enabled: yes
-  with_items:
-    - glance-registry
-    - glance-api
+  with_items: openstack_glance_services
