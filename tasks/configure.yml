@@ -57,17 +57,14 @@
         modify_glance_ini|changed or
         update_workaround_script|changed
 
-- name: restart glance
+- name: restart glance services if necessary
   service:
     name: "{{ item }}"
     state: restarted
-  with_items:
-    - glance-registry
-    - glance-api
+  with_items: openstack_glance_services
   when: modify_glance_ini|changed
 
 - name: ensure glance sqlite is deleted
   file:
     dest: /var/lib/glance/glance.sqlite
     state: absent
-
