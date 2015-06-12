@@ -34,7 +34,7 @@
       - { section: paste_deploy, option: flavor, value: keystone }
   register: modify_glance_ini
 
-- name: ensure glance database has been populated with required tables
+- name: ensure glance database has been synced
   sudo_user: glance
   command: /usr/bin/glance-manage db_sync
   when: create_glance_db|changed or modify_glance_ini|changed
