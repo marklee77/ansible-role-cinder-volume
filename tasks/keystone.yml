@@ -1,5 +1,5 @@
 ---
-- name: create glance user in keystone
+- name: ensure glance user has been created in keystone
   environment:
     http_proxy: ''
     HTTP_PROXY: ''
@@ -10,7 +10,7 @@
     user: glance
     password: "{{ openstack_identity_glance_password }}"
 
-- name: add glance user to the service tenant with the admin role
+- name: ensure glance user has been added to service tenant with admin role
   environment:
     http_proxy: ''
     HTTP_PROXY: ''
@@ -21,7 +21,7 @@
     user: glance
     role: admin
 
-- name: add glance endpoint
+- name: ensure glance endpoint information has been added to keystone
   environment:
     http_proxy: ''
     HTTP_PROXY: ''

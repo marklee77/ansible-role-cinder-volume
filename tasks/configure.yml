@@ -37,8 +37,7 @@
 - name: ensure glance database has been populated with required tables
   sudo_user: glance
   command: /usr/bin/glance-manage db_sync
-  when: create_glance_db|changed or
-        modify_glance_ini|changed
+  when: create_glance_db|changed or modify_glance_ini|changed
   failed_when: false
 
 - name: update glance workaround script from template
@@ -50,11 +49,10 @@
     mode: 0700 
   register: update_workaround_script
 
-- name: run glance database workaround script
+- name: run glance database workaround script if necessary
   sudo_user: glance
   command: /var/lib/glance/glance-mysql-utf8-workaround.sh
-  when: create_glance_db|changed or
-        modify_glance_ini|changed or
+  when: create_glance_db|changed or modify_glance_ini|changed or
         update_workaround_script|changed
 
 - name: restart glance services if necessary
