@@ -1,5 +1,5 @@
 ---
-- name: ensure glance is properly configured
+- name: ensure glance-api.conf and glance-registry.conf are properly configured
   ini_file:
     dest: /etc/glance/glance-{{ item[0] }}.conf
     group: glance
