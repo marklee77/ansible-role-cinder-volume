@@ -3,4 +3,4 @@
 private
 library
 roles/*
-!roles/glance
+!roles/cinder-controller

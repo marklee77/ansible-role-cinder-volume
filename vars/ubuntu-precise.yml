@@ -1,4 +1,4 @@
-openstack_glance_package_info:
+openstack_cinder_package_info:
   pkg_mgr: apt
   args:
     pkg: "{{ item }}"

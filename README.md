@@ -1,9 +1,9 @@
-glance ansible role
-===================
+cinder-controller ansible role
+==============================
 
-[![Build Status](https://travis-ci.org/marklee77/ansible-role-glance.svg?branch=master)](https://travis-ci.org/marklee77/ansible-role-glance)
+[![Build Status](https://travis-ci.org/marklee77/ansible-role-cinder-controller.svg?branch=master)](https://travis-ci.org/marklee77/ansible-role-cinder-controller)
 
-The purpose of this role is to deploy glance onto Ubuntu. 
+The purpose of this role is to deploy cinder-controller onto Ubuntu. 
 
 Role Variables
 --------------
@@ -18,7 +18,7 @@ Example Playbook
     - hosts: all
       sudo: True
       roles:
-        - glance
+        - cinder-controller
 
 License
 -------
