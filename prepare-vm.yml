@@ -4,4 +4,5 @@
   sudo: True
   roles:
     - mysql
+    - rabbitmq-server
     - keystone
