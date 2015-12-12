@@ -1,0 +1,15 @@
+---
+- name: ensure cinder rabbitmq vhost is present
+  rabbitmq_vhost:
+    name: /cinder
+    state: present
+
+- name: ensure cinder rabbitmq user is present
+  rabbitmq_user:
+    user: cinder
+    password: "{{ openstack_rabbitmq_cinder_password }}"
+    vhost: /cinder
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present

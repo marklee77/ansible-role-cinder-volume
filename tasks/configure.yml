@@ -1,68 +1,55 @@
 ---
-- name: ensure glance-api.conf and glance-registry.conf are properly configured
+- name: ensure cinder.conf is properly configured
   ini_file:
-    dest: /etc/glance/glance-{{ item[0] }}.conf
-    group: glance
+    dest: /etc/cinder/cinder.conf
+    group: cinder
     mode: 0640
-    section: "{{ item[1].section }}"
-    option: "{{ item[1].option }}"
-    value: "{{ item[1].value }}"
-  with_nested:
-    - [ 'api', 'registry' ]
-    - 
-      - { section: DEFAULT, option: log_dir, value: /var/log/glance }
-      - { section: DEFAULT, option: verbose, value: "{{ openstack_log_verbose }}" }
-      - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
-      - { section: DEFAULT, 
-          option: container_formats, value: "ami,ari,aki,bare,ovf,docker" }
-      - { section: database, option: connection,
-          value: "mysql://glance:{{ openstack_mysql_glance_password }}@{{ 
-                    openstack_mysql_host }}:{{ openstack_mysql_port }}/glance" }
-      - { section: database, option: db_enforce_mysql_charset,
-          value: False }
-      - { section: keystone_authtoken, option: auth_uri, 
-          value: "{{ openstack_identity_internal_url }}" }
-      - { section: keystone_authtoken, option: auth_host, 
-          value: "{{ openstack_identity_endpoint_host }}" }
-      - { section: keystone_authtoken, option: auth_port, value: 35357 }
-      - { section: keystone_authtoken, option: auth_protocol, value: http }
-      - { section: keystone_authtoken, option: admin_tenant_name, 
-          value: service }
-      - { section: keystone_authtoken, option: admin_user, value: glance }
-      - { section: keystone_authtoken, option: admin_password, 
-          value: "{{ openstack_identity_glance_password }}" }
-      - { section: paste_deploy, option: flavor, value: keystone }
-  register: modify_glance_ini
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { section: DEFAULT, option: log_dir, value: /var/log/cinder }
+    - { section: DEFAULT, option: verbose, 
+        value: "{{ openstack_log_verbose }}" }
+    - { section: DEFAULT, option: debug, value: "{{ openstack_log_debug }}" }
+    - { section: DEFAULT, option: rpc_backend, value: rabbit }
+    - { section: DEFAULT,
+        option: rabbit_host, value: "{{ openstack_rabbitmq_host }}" }
+    - { section: DEFAULT, option: rabbit_port,
+        value: "{{ openstack_rabbitmq_port }}" }
+    - { section: DEFAULT, option: rabbit_userid, value: cinder }
+    - { section: DEFAULT, option: rabbit_password,
+        value: "{{ openstack_rabbitmq_cinder_password }}" }
+    - { section: DEFAULT, option: rabbit_virtual_host, value: /cinder }
+    - { section: database, option: connection,
+        value: "mysql://cinder:{{ openstack_mysql_cinder_password }}@{{ 
+                  openstack_mysql_host }}:{{ openstack_mysql_port }}/cinder" }
+    - { section: keystone_authtoken, option: auth_uri, 
+        value: "{{ openstack_identity_internal_url }}" }
+    - { section: keystone_authtoken, option: auth_host, 
+        value: "{{ openstack_identity_endpoint_host }}" }
+    - { section: keystone_authtoken, option: auth_port, value: 35357 }
+    - { section: keystone_authtoken, option: auth_protocol, value: http }
+    - { section: keystone_authtoken, option: admin_tenant_name, value: service }
+    - { section: keystone_authtoken, option: admin_user, value: cinder }
+    - { section: keystone_authtoken, option: admin_password, 
+        value: "{{ openstack_identity_cinder_password }}" }
+  register: modify_cinder_ini
 
-- name: ensure glance database has been synced
-  sudo_user: glance
-  command: /usr/bin/glance-manage db_sync
-  when: create_glance_db|changed or modify_glance_ini|changed
+- name: ensure cinder database has been synced
+  sudo_user: cinder
+  command: /usr/bin/cinder-manage db sync
+  when: create_cinder_db|changed or modify_cinder_ini|changed
   failed_when: false
 
-- name: update glance workaround script from template
-  template:
-    src: var/lib/glance/glance-mysql-utf8-workaround.sh
-    dest: /var/lib/glance/glance-mysql-utf8-workaround.sh
-    owner: glance
-    group: glance
-    mode: 0700 
-  register: update_workaround_script
-
-- name: run glance database workaround script if necessary
-  sudo_user: glance
-  command: /var/lib/glance/glance-mysql-utf8-workaround.sh
-  when: create_glance_db|changed or modify_glance_ini|changed or
-        update_workaround_script|changed
-
-- name: restart glance services if necessary
+- name: restart cinder services if necessary
   service:
     name: "{{ item }}"
     state: restarted
-  with_items: openstack_glance_services
-  when: modify_glance_ini|changed
+  with_items: openstack_cinder_services
+  when: modify_cinder_ini|changed
 
-- name: ensure glance sqlite is deleted
+- name: ensure cinder sqlite is deleted
   file:
-    dest: /var/lib/glance/glance.sqlite
+    dest: /var/lib/cinder/cinder.sqlite
     state: absent

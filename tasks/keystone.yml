@@ -1,5 +1,5 @@
 ---
-- name: ensure glance user has been created in keystone
+- name: ensure cinder user has been created in keystone
   environment:
     http_proxy: ''
     HTTP_PROXY: ''
@@ -7,10 +7,10 @@
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
     tenant: service
-    user: glance
-    password: "{{ openstack_identity_glance_password }}"
+    user: cinder
+    password: "{{ openstack_identity_cinder_password }}"
 
-- name: ensure glance user has been added to service tenant with admin role
+- name: ensure cinder user has been added to service tenant with admin role
   environment:
     http_proxy: ''
     HTTP_PROXY: ''
@@ -18,10 +18,10 @@
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
     tenant: service
-    user: glance
+    user: cinder
     role: admin
 
-- name: ensure glance endpoint information has been added to keystone
+- name: ensure cinder endpoint information has been added to keystone
   environment:
     http_proxy: ''
     HTTP_PROXY: ''
@@ -29,9 +29,25 @@
     endpoint: "{{ openstack_identity_admin_url }}"
     token: "{{ openstack_identity_admin_token }}"
     region: "{{ openstack_identity_region }}"
-    name: glance
-    type: image
-    description: "Image Service"
-    public_url: "{{ openstack_image_public_url }}"
-    internal_url: "{{ openstack_image_internal_url }}"
-    admin_url: "{{ openstack_image_admin_url }}"
+    name: cinder
+    type: volume
+    description: "Block Storage Service"
+    public_url: "{{ openstack_volume_public_url }}"
+    internal_url: "{{ openstack_volume_internal_url }}"
+    admin_url: "{{ openstack_volume_admin_url }}"
+
+- name: ensure cinderv2 endpoint information has been added to keystone
+  environment:
+    http_proxy: ''
+    HTTP_PROXY: ''
+  keystone_service:
+    endpoint: "{{ openstack_identity_admin_url }}"
+    token: "{{ openstack_identity_admin_token }}"
+    region: "{{ openstack_identity_region }}"
+    name: cinderv2
+    type: volumev2
+    description: "Block Storage v2 Service"
+    public_url: "{{ openstack_volumev2_public_url }}"
+    internal_url: "{{ openstack_volumev2_internal_url }}"
+    admin_url: "{{ openstack_volumev2_admin_url }}"
+

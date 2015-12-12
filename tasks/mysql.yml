@@ -2,25 +2,25 @@
 # FIXME: for security we assume root login requires direct login access to mysql
 # node, needs delegate_to for non-centralized deployments.
 
-- name: ensure glance database is present
+- name: ensure cinder database is present
   mysql_db:
     login_host: 127.0.0.1
     login_port: "{{ openstack_mysql_port }}"
     login_user: root
     login_password: "{{ openstack_mysql_root_password }}"
-    name: glance
-  register: create_glance_db
+    name: cinder
+  register: create_cinder_db
 
-- name: ensure glance database user is present
+- name: ensure cinder database user is present
   mysql_user:
     login_host: 127.0.0.1
     login_port: "{{ openstack_mysql_port }}"
     login_user: root
     login_password: "{{ openstack_mysql_root_password }}"
-    name: glance
+    name: cinder
     host: "{{ item }}"
-    password: "{{ openstack_mysql_glance_password }}"
-    priv: glance.*:ALL
+    password: "{{ openstack_mysql_cinder_password }}"
+    priv: cinder.*:ALL
   with_items:
     - localhost
     - "%"

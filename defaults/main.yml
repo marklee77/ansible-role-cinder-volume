@@ -5,24 +5,32 @@ openstack_mysql_root_password: >
                         '/private/credentials/mysql-root-password 
                          length=20 
                          chars=ascii_letters,digits') }}
-openstack_mysql_glance_password: >
+openstack_mysql_cinder_password: >
   {{ lookup('password', openstack_run_dir + 
-                        '/private/credentials/mysql-glance-password 
+                        '/private/credentials/mysql-cinder-password 
                          length=20 
+                         chars=ascii_letters,digits') }}
+openstack_rabbitmq_cinder_password: >
+  {{ lookup('password', openstack_run_dir +
+                        '/private/credentials/rabbitmq-cinder-password
+                         length=20
                          chars=ascii_letters,digits') }}
 openstack_identity_admin_token: >
   {{ lookup('password', openstack_run_dir + 
                         '/private/credentials/keystone-admin-token 
                          length=20 
                          chars=ascii_letters,digits') }}
-openstack_identity_glance_password: >
+openstack_identity_cinder_password: >
   {{ lookup('password', openstack_run_dir + 
-                        '/private/credentials/keystone-glance-password 
+                        '/private/credentials/keystone-cinder-password 
                          length=20 
                          chars=ascii_letters,digits') }}
 
 openstack_mysql_host: 127.0.0.1
 openstack_mysql_port: 3306
+
+openstack_rabbitmq_host: 127.0.0.1
+openstack_rabbitmq_port: 5672
 
 openstack_log_verbose: true
 openstack_log_debug: false
@@ -35,9 +43,12 @@ openstack_identity_internal_url: >
 openstack_identity_public_url: >
   http://{{ openstack_identity_endpoint_host }}:5000/v2.0
 
-openstack_image_endpoint_host: "{{ ansible_default_ipv4.address }}"
-openstack_image_admin_url: http://{{ openstack_image_endpoint_host }}:9292
-openstack_image_internal_url: http://{{ openstack_image_endpoint_host }}:9292
-openstack_image_public_url: http://{{ openstack_image_endpoint_host }}:9292
+openstack_volume_endpoint_host: "{{ ansible_default_ipv4.address }}"
+openstack_volume_admin_url: http://{{ openstack_volume_endpoint_host }}:8776/v1/%(tenant_id)s
+openstack_volume_internal_url: http://{{ openstack_volume_endpoint_host }}:8776/v1/%(tenant_id)s
+openstack_volume_public_url: http://{{ openstack_volume_endpoint_host }}:8776/v1/%(tenant_id)s
+openstack_volumev2_admin_url: http://{{ openstack_volume_endpoint_host }}:8776/v2/%(tenant_id)s
+openstack_volumev2_internal_url: http://{{ openstack_volume_endpoint_host }}:8776/v2/%(tenant_id)s
+openstack_volumev2_public_url: http://{{ openstack_volume_endpoint_host }}:8776/v2/%(tenant_id)s
 
 openstack_identity_region: RegionOne

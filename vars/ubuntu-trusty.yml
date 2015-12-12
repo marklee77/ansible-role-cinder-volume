@@ -1,4 +1,4 @@
-openstack_glance_package_info:
+openstack_cinder_package_info:
   pkg_mgr: apt
   args:
     pkg: "{{ item }}"
@@ -7,11 +7,11 @@ openstack_glance_package_info:
     state: latest
   pre_pkgs: []
   pkgs:
-    - glance
-    - python-glanceclient
-    - python-mysqldb
+    - cinder-api
+    - cinder-scheduler
+    - python-cinderclient
 
-openstack_glance_repo_info:
+openstack_cinder_repo_info:
   pkg_repo: apt_repository
   args:
     repo: "{{ item }}"
@@ -19,6 +19,6 @@ openstack_glance_repo_info:
     state: present
   repos: []
 
-openstack_glance_services:
-  - glance-registry
-  - glance-api
+openstack_cinder_services:
+  - cinder-api
+  - cinder-scheduler

@@ -12,6 +12,7 @@
         update: yes
       with_items:
         - mysql
+        - rabbitmq-server
         - keystone
 
     - name: check out library needed for demo deployment from github.com
