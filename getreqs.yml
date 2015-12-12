@@ -14,6 +14,7 @@
         - mysql
         - rabbitmq-server
         - keystone
+        - cinder-controller
 
     - name: check out library needed for demo deployment from github.com
       git:
