@@ -3,4 +3,4 @@
 private
 library
 roles/*
-!roles/cinder-controller
+!roles/cinder-volume
