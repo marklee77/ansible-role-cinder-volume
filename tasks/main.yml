@@ -15,8 +15,5 @@
       paths:
         - ../vars
 
-- include: mysql.yml
-- include: rabbitmq.yml
 - include: install.yml
 - include: configure.yml
-- include: keystone.yml

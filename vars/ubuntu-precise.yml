@@ -8,9 +8,8 @@ openstack_cinder_package_info:
   pre_pkgs:
     - ubuntu-cloud-keyring
   pkgs:
-    - cinder-api
-    - cinder-scheduler
-    - python-cinderclient
+    - cinder-volume
+    - lvm2
 
 openstack_cinder_repo_info:
   pkg_repo: apt_repository
@@ -23,6 +22,4 @@ openstack_cinder_repo_info:
     - deb-src http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/icehouse main
 
 openstack_cinder_services:
-  - cinder-api
-  - cinder-scheduler
   - cinder-volume

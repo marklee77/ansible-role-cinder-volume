@@ -6,3 +6,4 @@
     - mysql
     - rabbitmq-server
     - keystone
+    - cinder-controller

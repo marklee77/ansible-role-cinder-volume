@@ -24,6 +24,10 @@
     - { section: database, option: connection,
         value: "mysql://cinder:{{ openstack_mysql_cinder_password }}@{{ 
                   openstack_mysql_host }}:{{ openstack_mysql_port }}/cinder" }
+    - { section: DEFAULT, option: glance_host,
+        value: "{{ openstack_image_endpoint_host }}" }
+    - { section: DEFAULT,
+        option: my_ip, value: "{{ openstack_volume_node_ip }}" }
     - { section: keystone_authtoken, option: auth_uri, 
         value: "{{ openstack_identity_internal_url }}" }
     - { section: keystone_authtoken, option: auth_host, 

@@ -1,9 +1,9 @@
-cinder-controller ansible role
-==============================
+cinder-volume ansible role
+==========================
 
-[![Build Status](https://travis-ci.org/marklee77/ansible-role-cinder-controller.svg?branch=master)](https://travis-ci.org/marklee77/ansible-role-cinder-controller)
+[![Build Status](https://travis-ci.org/marklee77/ansible-role-cinder-volume.svg?branch=master)](https://travis-ci.org/marklee77/ansible-role-cinder-volume)
 
-The purpose of this role is to deploy cinder-controller onto Ubuntu. 
+The purpose of this role is to deploy cinder-volume onto Ubuntu. 
 
 Role Variables
 --------------
@@ -18,7 +18,7 @@ Example Playbook
     - hosts: all
       sudo: True
       roles:
-        - cinder-controller
+        - cinder-volume
 
 License
 -------

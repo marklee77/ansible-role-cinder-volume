@@ -7,9 +7,8 @@ openstack_cinder_package_info:
     state: latest
   pre_pkgs: []
   pkgs:
-    - cinder-api
-    - cinder-scheduler
-    - python-cinderclient
+    - cinder-volume
+    - lvm2
 
 openstack_cinder_repo_info:
   pkg_repo: apt_repository
@@ -20,5 +19,4 @@ openstack_cinder_repo_info:
   repos: []
 
 openstack_cinder_services:
-  - cinder-api
-  - cinder-scheduler
+  - cinder-volume
