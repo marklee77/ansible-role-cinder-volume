@@ -40,11 +40,12 @@
         value: "{{ openstack_identity_cinder_password }}" }
   register: modify_cinder_ini
 
-- name: ensure cinder database has been synced
-  sudo_user: cinder
-  command: /usr/bin/cinder-manage db sync
-  when: create_cinder_db|changed or modify_cinder_ini|changed
-  failed_when: false
+- name: create cinder-volumes volume group
+  lvg:
+    vg: cinder-volumes
+    pvs: "/dev/{{ openstack_cinder_volume_devices|join(',/dev/') }}"
+    state: present
+    vg_options: ""
 
 - name: restart cinder services if necessary
   service:
